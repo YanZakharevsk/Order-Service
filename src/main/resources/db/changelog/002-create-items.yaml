@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: hoksik
+
+      changes:
+        - createTable:
+            tableName: items
+
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: price
+                  type: numeric
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+
+        -  createIndex:
+             indexName: "idx_items_name"
+             tableName: items
+             columns:
+               - column:
+                   name: name

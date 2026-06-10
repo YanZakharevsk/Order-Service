@@ -10,12 +10,12 @@ databaseChangeLog:
 
             columns:
               - column:
-                name: id
-                type: bigint
-                autoIncrement: true
-                constraints:
-                  primaryKey: true
-                  nullable: false
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
 
               - column:
                   name: user_id
@@ -44,11 +44,11 @@ databaseChangeLog:
 
               - column:
                   name: created_at
-                  type: TIMESTAMP
+                  type: timestamp
 
               - column:
                   name: updated_at
-                  type: TIMESTAMP
+                  type: timestamp
 
         - createIndex:
             indexName: "idx_orders_user_id"
@@ -64,7 +64,3 @@ databaseChangeLog:
               - column:
                   name: status
 
-        - addCheckConstraint:
-            tableName: orders
-            constraintName: chk_total_price_positive
-            checkConstraint: total_price >= 0

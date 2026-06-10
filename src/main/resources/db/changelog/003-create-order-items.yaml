@@ -61,8 +61,3 @@ databaseChangeLog:
             columns:
               - column:
                   name: item_id
-
-        - addCheckConstraint:
-            tableName: order_items
-            constraintName: chk_quantity_positive
-            checkConstraint: quantity > 0

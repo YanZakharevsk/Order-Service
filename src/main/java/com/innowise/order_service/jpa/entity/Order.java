@@ -3,6 +3,8 @@ package com.innowise.order_service.jpa.entity;
 import com.innowise.order_service.jpa.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
@@ -17,6 +19,12 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@SQLDelete(sql = """
+    UPDATE orders
+    SET deleted = true
+    WHERE id = ?
+""")
+@SQLRestriction("deleted = false")
 public class Order extends BaseAuditableEntity{
 
     @Id

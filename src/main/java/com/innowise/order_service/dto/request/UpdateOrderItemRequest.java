@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 public class UpdateOrderItemRequest {
     @NotEmpty(message = "Order must contains items")
-    private List<OrderItemRequest> items;
+    private List<OrderItemRequest> orderItems;
 }

@@ -1,0 +1,77 @@
+name: Order service CI
+
+on:
+  push:
+
+    branches: [ "main", "dev", "feat/**" ]
+  pull_request:
+
+    branches: [ "main", "dev" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build with Maven (Compile only)
+        run: mvn clean compile
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Run Tests with Coverage
+        run: mvn verify
+
+  code-analysis:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: SonarQube
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          run: >
+            mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar 
+            -Dsonar.projectKey=YanZakharevsk_OrderService 
+            -Dsonar.organization=yanzakharevsk 
+            -Dsonar.host.url=https://sonarcloud.io
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: code-analysis
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker Image
+        run: docker build -t order-service:latest .

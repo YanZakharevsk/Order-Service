@@ -52,13 +52,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-<<<<<<< HEAD
+
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
-=======
->>>>>>> dac16dc (Add artifacts for job like code analysisi)
 
 		<dependency>
 			<groupId>org.postgresql</groupId>

@@ -10,5 +10,5 @@ import lombok.Data;
 public class UpdateOrderStatusRequest {
 
     @NotNull(message = "Order status can not be null")
-    private String status;
+    private OrderStatus status;
 }
